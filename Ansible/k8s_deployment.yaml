@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: mc-app
-        image: preethareddy/k8s:8
+        image: preethareddy/k8s:12
         ports:
         - containerPort: 8080
 ---
