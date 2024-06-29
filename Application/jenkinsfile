@@ -6,7 +6,7 @@
         stage('Checkout Code') {
             steps {
                 echo 'scm git'
-                git branch: 'main', url: 'https://github.com/devopstraininghub/REALTIMEPROJECT.git'
+                git branch: 'main', url: 'https://github.com/PreethaRedd/ansi-k8sPROJECT.git'
             }
         }
     	
@@ -24,22 +24,22 @@
                 echo 'scanning project'
                 sh 'ls -ltr'
                 sh '''cd Application && mvn sonar:sonar \\
-                      -Dsonar.host.url=http://3.92.165.67:9000 \\
-                      -Dsonar.login=squ_1ed7440050e2a1369d5dbf845cd67bae3850d9bc'''
+                      -Dsonar.host.url=http://http://54.197.182.253:9000\\
+                      -Dsonar.login=sqa_6bce15c15637a2789f7f1c94460601550b5e3eb7'''
             }
     	}
        stage('Build docker image'){
             steps{
                 script{
                     echo 'docker image build'
-					sh 'cd Application && docker build -t devopshubg333/k8s:${BUILD_NUMBER} .'
+					sh 'cd Application && docker build -t preethareddy/k8s:${BUILD_NUMBER} .'
                 }
             }
         }
 		
        stage('docker image scan'){
         steps{
-            sh "trivy image devopshubg333/k8s:${BUILD_NUMBER}"
+            sh "trivy image preethareddy/k8s:${BUILD_NUMBER}"
         }
     }		
          
@@ -48,24 +48,24 @@
             steps{
                 script{
                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                   sh 'docker login -u devopshubg333 -p ${dockerhub}'
+                   sh 'docker login -u preethareddy -p ${dockerhub}'
 
               }
-                   sh 'docker push devopshubg333/k8s:${BUILD_NUMBER}'
+                   sh 'docker push preethareddy/k8s:${BUILD_NUMBER}'
                 }
             }
         }
 		
       stage('Update kubernetes Deployment manifest File') {
         environment {
-            GIT_REPO_NAME = "REALTIMEPROJECT"
-            GIT_USER_NAME = "devopstraininghub"
+            GIT_REPO_NAME = "ansi-k8sPROJECT"
+            GIT_USER_NAME = "PreethaRedd"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    git config user.email "madhu@gmail.com"
-                    git config user.name "madhu"
+                    git config user.email "37preethareddy@gmail.com"
+                    git config user.name "PreethaRedd"
                     BUILD_NUMBER=${BUILD_NUMBER}
                   
                     sed -i "s/k8s:.*/k8s:${BUILD_NUMBER}/g" Ansible/k8s_deployment.yaml
