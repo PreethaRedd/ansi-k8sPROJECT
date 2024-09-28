@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+  vars:
+    wheel_file: Example-1.1.2-py3-none-any.whl
+    secret_key: AVerySafeExampleKey123!
+    db_path: postgresql://example_user:myVerySecretDatabasePassword@localhost:5432/example_db
+    port: 5000
+    instance_path: /opt/example/instance
+    admin_groups:
+      - Read-only
+      - Read-write
+      - Super
+  roles:
+    - certificates
+    - deploy_app
+

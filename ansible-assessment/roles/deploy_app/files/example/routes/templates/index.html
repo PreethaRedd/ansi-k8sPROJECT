@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="hero">
+    <div class="hero-body">
+        <p class="title">Example Application</p>
+        <p class="subtitle">Congratulations, you have successfully deployed the example application!</p>
+    </div>
+</div>
+<div class="container has-text-left">
+    <div class="box grid">
+        <p class="cell p-2 has-background-primary has-text-primary-invert has-radius-normal"><strong>DB_PATH:</strong> {{ config['DB_PATH'] | default(missing()) }}</p>
+        <p class="cell p-2 has-background-primary has-text-primary-invert has-radius-normal">
+            <strong>ADMIN_GROUPS:</strong> {{ config['ADMIN_GROUPS'] | default(missing()) }}
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% macro icon(cls='fas fa-success', text=None, colour='has-background-light') %}
+<span class="tag icon-text {{ colour }}">
+    <span class="icon">
+        <i class="{{ cls }}"></i>
+    </span>
+    {{ text | default() }}
+</span>
+{% endmacro %}
+
+{% macro missing() %}
+{{ icon('fas fa-warning', 'Missing', 'has-background-danger')}}
+{% endmacro %}

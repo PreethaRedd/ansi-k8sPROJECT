@@ -1,0 +1,21 @@
+{% extends "form.html" %}
+{% block form -%}
+    {% for field in form -%}
+        <div class="field">
+            {% if field.label and field.widget.input_type not in ['submit', 'hidden'] -%}
+                {{ field.label(class_='label') }}
+            {%- endif %}
+            <div class="control {%- if field.errors %} has-icons-right{% endif %}">
+                {{ field }}
+                {% if field.errors -%} 
+                <span class="icon is-small is-right">
+                    <i class="fas fa-triangle-exclamation"></i>
+                </span> 
+                {%- endif %}
+            </div>
+            {% if field.errors -%}
+                <p class="help is-danger">{{ field.errors | join(', ') }}</p>
+            {%- endif %}
+        </div>
+    {% endfor %}
+{% endblock %}
