@@ -1,5 +1,0 @@
-#!/bin/bash
-
-export INSTANCE_PATH="{{ instance_path }}"
-/opt/example/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:{{ port }} run:app
-

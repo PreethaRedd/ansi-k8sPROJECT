@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<form class="container box" method="POST">
+    {{ form.hidden_tag() }}
+    {% block form %}{% endblock %}
+</form>
+{% endblock %}

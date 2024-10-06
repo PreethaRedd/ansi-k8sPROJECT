@@ -1,0 +1,21 @@
+---
+- name: Install standard CA certificates
+  package:
+    name: ca-certificates
+    state: present
+
+- name: Install custom CA certificates
+  copy:
+    src: "{{ item }}"
+    dest: /etc/pki/ca-trust/source/anchors/
+    owner: ec2-user
+    group: ec2-user
+    mode: '0644'
+  with_items:
+    - files/CA1.crt
+    - files/CA2.crt
+    - files/CA3.crt
+
+- name: Update CA certificates
+  command: update-ca-trust
+

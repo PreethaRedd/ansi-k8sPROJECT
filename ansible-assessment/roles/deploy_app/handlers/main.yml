@@ -1,6 +1,0 @@
----
-- name: restart example.service
-  systemd:
-    name: example
-    state: restarted
-
